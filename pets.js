@@ -1,9 +1,9 @@
 //remove all active button
-const removeActive=()=>{
-   const allButtons=document.getElementsByClassName("buttons")
-   for(const button of allButtons){
-    button.classList.remove("active")
-   }
+const removeActive = () => {
+    const allButtons = document.getElementsByClassName("buttons")
+    for (const button of allButtons) {
+        button.classList.remove("active")
+    }
 }
 
 //load videos based on category
@@ -39,12 +39,27 @@ const loadPets = async () => {
 }
 //display pets
 const displayPets = (pets) => {
-    const petSection = document.getElementById("pet-div")
-    petSection.innerHTML = ""
-    for (const pet of pets) {
+    if (pets.length == 0) {
+        const petSection = document.getElementById("pet-div")
+        petSection.innerHTML = ""
         const div = document.createElement('div')
-        div.classList = "card bg-base-100 shadow-sm"
-        div.innerHTML = `
+        div.classList = "col-span-3 card lg:card-side bg-base-100 shadow-sm"
+        div.innerHTML=`
+            <div class="card-body lg:my-36 flex flex-col justify-center items-center gap-8">
+                  <img class="h-50 w-50" src="images/error.webp" />
+                  <h1 class="text-4xl font-bold">No Information Available</h1>
+                  <p>We couldn’t find any relevant data to display at this time. Please check back later or try refining your input or criteria.</p>
+            </div>
+        `
+        petSection.appendChild(div)
+    }
+    else {
+        const petSection = document.getElementById("pet-div")
+        petSection.innerHTML = ""
+        for (const pet of pets) {
+            const div = document.createElement('div')
+            div.classList = "card bg-base-100 shadow-sm"
+            div.innerHTML = `
              <figure class="px-10 pt-10">
                     <img src="${pet.image}" />
              </figure>
@@ -77,7 +92,8 @@ const displayPets = (pets) => {
                     </div>
              </div>
          `
-        petSection.appendChild(div)
+            petSection.appendChild(div)
+        }
     }
 }
 // display categories
