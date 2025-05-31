@@ -53,12 +53,12 @@ const adopted = (id) => {
 
 
     // close button in modal 
-    const close=document.getElementById("close")
-    close.onclick=function(){
-        const adoptedButton=document.getElementById(id)
-        adoptedButton.innerText="adopted"
+    const close = document.getElementById("close")
+    close.onclick = function () {
+        const adoptedButton = document.getElementById(id)
+        adoptedButton.innerText = "adopted"
         adoptedButton.classList.add("text-gray-500")
-        adoptedButton.disabled=true
+        adoptedButton.disabled = true
     }
 };
 
@@ -79,6 +79,57 @@ const loadPets = async () => {
     const fetched = await fetch('https://openapi.programming-hero.com/api/peddy/pets')
     const res = await fetched.json();
     const display = displayPets(res.pets)
+}
+//load individul pet
+const loadIndividualPetDetails = async (id) => {
+    const fetched = await fetch(`https://openapi.programming-hero.com/api/peddy/pet/${id}`)
+    const res = await fetched.json();
+    const display = displayIndividualPetDetails(res.petData)
+}
+//display individual pet
+const displayIndividualPetDetails = (pet) => {
+    const detailsModal = document.getElementById("detailsModal")
+    detailsModal.innerHTML = `
+       <figure class="px-10 pt-10">
+                    <img class="rounded lg:h-[500px] w-full object-cover" src="${pet.image}" />
+        </figure>
+        <div class="px-10 card-body">
+                    <h1 class="font-bold text-2xl">${pet.pet_name}</h1>
+                    <div class="flex justify-between">
+                        <div>
+                                <div class="flex gap-1">
+                                   <img class="h-5 w-5" src="${'https://img.icons8.com/?size=48&id=115221&format=png'}"/> 
+                                   ${!pet.breed || pet.breed.length == 0 ? '<h1 class="text-gray-600">Breed: Not Found</h1>' : `<h1 class="text-gray-600">Breed: ${pet.breed}</h1>`}
+                                </div>
+                                <div class="flex gap-1">
+                                   <img class="h-5 w-5" src="${'https://img.icons8.com/?size=100&id=1665&format=png'}"/>
+                                   ${!pet.gender || pet.gender.length == 0 ? '<h1 class="text-gray-600">Gender: Not Found</h1>' : `<h1 class="text-gray-600">Gender: ${pet.gender}</h1>`} 
+                                </div>
+                                <div class="flex gap-1">
+                                   <img class="h-5 w-5" src="${'https://img.icons8.com/?size=100&id=5351&format=png'}"/>
+                                   ${`<h1 class="text-gray-600">Vaccinated_status: ${pet.vaccinated_status}</h1>`} 
+                                </div>
+                        </div>
+                        <div>
+                                <div class="flex gap-1">
+                                   <img class="h-5 w-5" src="${'https://img.icons8.com/?size=96&id=5VOqBjvi7siv&format=png'}"/> 
+                                   ${!pet.date_of_birth || pet.date_of_birth.length == 0 ? '<h1 class="text-gray-600">Birth: Not Found</h1>' : `<h1 class="text-gray-600">Birth: ${pet.date_of_birth}</h1>`}
+                                </div>
+                                <div class="flex gap-1">
+                                   <img class="h-5 w-5" src="${'https://img.icons8.com/?size=48&id=85843&format=png'}"/>
+                                   ${!pet.price || pet.price.length == 0 ? '<h1 class="text-gray-600">Price: Not Found</h1>' : `<h1 class="text-gray-600">Price: ${pet.price}</h1>`}  
+                                </div>
+                        </div>
+                    </div>
+
+                    <p class="divider"></p>
+
+                    <h1 class="font-bold text-2xl">Detail Information</h1>
+                    <p class="text-gray-600">${pet.pet_details}</p>
+
+        </div>
+    `
+    document.getElementById("petDetailsModal").showModal()
 }
 //display pets
 const displayPets = (pets) => {
@@ -127,11 +178,10 @@ const displayPets = (pets) => {
 
 
                     <p class="divider"><p>
-
                     <div class="flex justify-between">
                         <button onclick="likePet('${pet.petId}')" class="btn btn-square"><img class='h-5' src="${'https://img.icons8.com/?size=48&id=82788&format=png'}" /></button>
                         <button id="${pet.petId}" onclick="adopted('${pet.petId}')" class="btn text-[#0E7A81] hover:bg-[#0E7A81] hover:text-white">Adopt</button>
-                        <button class="btn text-[#0E7A81]">Details</button>
+                        <button onclick="loadIndividualPetDetails('${pet.petId}')" class="btn text-[#0E7A81]">Details</button>
                     </div>
              </div>
          `
