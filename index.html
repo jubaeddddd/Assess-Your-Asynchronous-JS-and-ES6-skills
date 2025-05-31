@@ -45,7 +45,8 @@
                 <h1 class="text-6xl font-bold text-center my-6">Your Path to Adoption <br> Starts Here</h1>
             </div>
             <div>
-                <p class="p-9 lg:px-56 text-center">Every story begins with a spark of hope — and this is where yours takes its first step. Let's find the perfect paws to complete your family.</p>
+                <p class="p-9 lg:px-56 text-center">Every story begins with a spark of hope — and this is where yours
+                    takes its first step. Let's find the perfect paws to complete your family.</p>
             </div>
             <div class="my-5">
                 <button class="btn bg-[#0E7A81] text-white">View More</button>
@@ -58,27 +59,50 @@
         <!-- wish  -->
         <div class="flex flex-col justify-center items-center gap-5">
             <h1 class="text-3xl font-bold">Adopt Your Best Friend</h1>
-            <p class="px-10 lg:px-52 text-center">Every pet deserves a loving home, and every heart deserves a loyal companion. Open your home to a furry friend and begin a journey filled with unconditional love, tail wags, and endless cuddles.</p>
+            <p class="px-10 lg:px-52 text-center">Every pet deserves a loving home, and every heart deserves a loyal
+                companion. Open your home to a furry friend and begin a journey filled with unconditional love, tail
+                wags, and endless cuddles.</p>
         </div>
         <!-- category buttons  -->
         <div id="category-buttons" class="w-11/12 gap-5 my-10 flex flex-col lg:flex-row justify-evenly items-center">
-           
+
         </div>
         <!-- best deals and sort button  -->
-         <div class="flex justify-between w-11/12 mx-auto my-6">
+        <div class="flex justify-between w-11/12 mx-auto my-6">
             <h1 class="text-xl font-bold">Best Deal For You</h1>
             <button class="btn bg-[#0E7A81] text-white">Sort By Price</button>
-         </div>
-         <!-- pets section  -->
-         <section class="w-11/12 mx-auto flex flex-col lg:flex-row gap-7">
-             <div id="pet-div" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:w-3/4 gap-4">
+        </div>
+        <!-- pets section  -->
+        <section class="w-11/12 mx-auto flex flex-col lg:flex-row gap-7">
+            <div id="pet-div" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:w-3/4 gap-4">
 
-             </div>
-             <div class="card-body lg:w-1/4 items-center text-center grid grid-cols-2">
-                  
-             </div>
-         </section>
+            </div>
+            <div id="liked-pet" class="lg:w-1/4 grid grid-cols-2">
+
+            </div>
+        </section>
     </main>
+
+
+
+    <!-- Adopted Modal  -->
+    <button class="btn hidden" onclick="customModal.showModal()">open modal</button>
+    <dialog id="customModal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+            <div id="ModalContent" class="flex flex-col justify-center items-center text-center gap-4">
+
+            </div>
+            <div class="modal-action">
+                <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button id="close" class="btn">Close</button>
+                </form>
+            </div>
+        </div>
+    </dialog>
+
+
+
 
 
     <script src="pets.js"></script>

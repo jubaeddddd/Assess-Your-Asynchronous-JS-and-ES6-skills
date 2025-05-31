@@ -5,7 +5,6 @@ const removeActive = () => {
         button.classList.remove("active")
     }
 }
-
 //load videos based on category
 const displayPetsBasedOnCategory = (pet_name) => {
     fetch(`https://openapi.programming-hero.com/api/peddy/category/${pet_name}`)
@@ -17,7 +16,51 @@ const displayPetsBasedOnCategory = (pet_name) => {
             displayPets(display.data)
         })
 }
+//like button
+const likePet = (petId) => {
+    fetch(`https://openapi.programming-hero.com/api/peddy/pet/${petId}`)
+        .then(res => res.json())
+        .then(display => {
+            const pet = document.getElementById('liked-pet')
+            const img = document.createElement('img')
+            img.src = display.petData.image
+            pet.appendChild(img)
+        }
+        )
+}
+//adopted button
+const adopted = (id) => {
+    //modal
+    const modalContent = document.getElementById("ModalContent");
+    modalContent.innerHTML = `
+    <img src="https://img.icons8.com/?size=96&id=kRZicCB1E8B8&format=gif" />
+    <h1 class="text-4xl font-bold">Congrats</h1>
+    <p>Adoption process in start for your pet</p>
+    <h1 id="countdown" class="text-6xl font-bold">3</h1>
+  `;
+    document.getElementById("customModal").showModal();
 
+    let num = 3;
+    const countdown = document.getElementById("countdown");
+    const interval = setInterval(() => {
+        num--;
+        countdown.innerText = num;
+        if (num <= 0) {
+            clearInterval(interval);
+            countdown.innerText = "🎉";
+        }
+    }, 1000);
+
+
+    // close button in modal 
+    const close=document.getElementById("close")
+    close.onclick=function(){
+        const adoptedButton=document.getElementById(id)
+        adoptedButton.innerText="adopted"
+        adoptedButton.classList.add("text-gray-500")
+        adoptedButton.disabled=true
+    }
+};
 
 
 
@@ -44,7 +87,7 @@ const displayPets = (pets) => {
         petSection.innerHTML = ""
         const div = document.createElement('div')
         div.classList = "col-span-3 card lg:card-side bg-base-100 shadow-sm"
-        div.innerHTML=`
+        div.innerHTML = `
             <div class="card-body lg:my-36 flex flex-col justify-center items-center gap-8">
                   <img class="h-50 w-50" src="images/error.webp" />
                   <h1 class="text-4xl font-bold">No Information Available</h1>
@@ -61,7 +104,7 @@ const displayPets = (pets) => {
             div.classList = "card bg-base-100 shadow-sm"
             div.innerHTML = `
              <figure class="px-10 pt-10">
-                    <img src="${pet.image}" />
+                    <img class="rounded" src="${pet.image}" />
              </figure>
              <div class="px-10 card-body">
                     <h1 class="font-bold text-2xl">${pet.pet_name}</h1>
@@ -86,8 +129,8 @@ const displayPets = (pets) => {
                     <p class="divider"><p>
 
                     <div class="flex justify-between">
-                        <button class="btn btn-square"><img class='h-5' src="${'https://img.icons8.com/?size=48&id=82788&format=png'}" /></button>
-                        <button class="btn text-[#0E7A81]">Adopt</button>
+                        <button onclick="likePet('${pet.petId}')" class="btn btn-square"><img class='h-5' src="${'https://img.icons8.com/?size=48&id=82788&format=png'}" /></button>
+                        <button id="${pet.petId}" onclick="adopted('${pet.petId}')" class="btn text-[#0E7A81] hover:bg-[#0E7A81] hover:text-white">Adopt</button>
                         <button class="btn text-[#0E7A81]">Details</button>
                     </div>
              </div>
